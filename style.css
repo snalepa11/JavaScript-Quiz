@@ -1,0 +1,28 @@
+header {
+    display: flex;
+}
+
+header a {
+    display: flex;
+    color: blueviolet;
+    font-size: large;
+    justify-content: space-between;
+}
+
+.view-highscores {
+    text-align: left;
+}
+
+#timer {
+    text-align: right;
+}
+
+section {
+    text-align: center;
+}
+
+section h1 {
+    font-size: xx-large;
+    font-display: bold;
+    color: blueviolet;
+}
