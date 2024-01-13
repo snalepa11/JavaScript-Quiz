@@ -1,6 +1,7 @@
 
+function runCode(){
 
-
+    
 var myQuestions = [
     {
         question: "What kinds of data types are the following: numbers, strings, booleans, and symbols?",
@@ -67,3 +68,6 @@ var myQuestions = [
     }
 
 ]
+}
+
+document.getElementById('startBtn').addEventListener("click" , runCode);
