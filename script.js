@@ -1,7 +1,12 @@
 
 function runCode(){
 
-    
+var timeEL = getElementById("timer")
+
+function sendMessage() {
+    timeEL.textContent = ('Times up!');
+}
+
 var myQuestions = [
     {
         question: "What kinds of data types are the following: numbers, strings, booleans, and symbols?",

@@ -1,12 +1,11 @@
 header {
     display: flex;
+    justify-content: space-between;
 }
 
-header a {
-    display: flex;
+header p {
     color: blueviolet;
     font-size: large;
-    justify-content: space-between;
 }
 
 .view-highscores {
