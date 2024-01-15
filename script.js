@@ -7,6 +7,22 @@ function sendMessage() {
     timeEL.textContent = ('Times up!');
 }
 
+function startTimer() {
+    var secondsLeft = 30;
+    var timerInterval = setInterval(function() {
+        if(secondsLeft === 0) {
+            clearInterval(timerInterval);
+            sendMessage();
+        } else { 
+            timeEl.textContent='00:'+secondsLeft;
+        }
+        secondsLeft--;
+    }, 1000);
+}
+
+startTimer();
+
+
 var myQuestions = [
     {
         question: "What kinds of data types are the following: numbers, strings, booleans, and symbols?",
