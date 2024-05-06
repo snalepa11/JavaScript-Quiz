@@ -25,3 +25,12 @@ section h1 {
     font-display: bold;
     color: blueviolet;
 }
+
+#display-choices {
+    display: flex;
+    flex-direction: column;
+}
+
+.hide {
+    display: none;
+}
