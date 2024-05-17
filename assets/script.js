@@ -136,7 +136,7 @@ function displayChoices (){
 
 displayChoices();
 
-var choicebtn
+var choicebtn = 
 
 displayQuestion();
 }

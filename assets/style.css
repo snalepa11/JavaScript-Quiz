@@ -29,6 +29,7 @@ section h1 {
 #display-choices {
     display: flex;
     flex-direction: column;
+    font-size: larger;
 }
 
 .hide {
