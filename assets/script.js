@@ -78,7 +78,7 @@ var myQuestions = [
     },
 
     {
-        question: "What 'this' keywor din javascript?",
+        question: "What 'this' keyword in javascript?",
 
         answers: {
             a: ' this, refers to the variable it is next to',
@@ -141,6 +141,12 @@ var choicebtn =
 displayQuestion();
 }
 
+function checkAnswer(answer)
 
+function gameOver()
+
+function storeHighScores(event)
+
+function showHighScores() 
 
 document.getElementById('startBtn').addEventListener("click" , runCode);
