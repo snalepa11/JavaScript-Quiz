@@ -1,7 +1,23 @@
+function startTimer() {
+    var timeEL = document.getElementById("timer")
+
+    var secondsLeft = 5;
+    var timerInterval = setInterval(updateTimer, 1000);
+
+    function updateTimer() {
+        if (secondsLeft === 0) {
+            clearInterval(timerInterval);
+            timeEL.textContent = 'Times up!';
+        } else {
+            timeEL.textContent = "Time: " + secondsLeft;
+            secondsLeft--;
+        }
+    }
+}
+
 
 function runCode() {
-
-    var timeEL = document.getElementById("timer")
+    startTimer();
 
     var introEL = document.getElementById("quiz-intro")
 
@@ -64,23 +80,6 @@ function runCode() {
         }
     ]
 
-    function sendMessage() {
-        timeEL.textContent = ('Times up!');
-    }
-
-    function startTimer() {
-        var secondsLeft = 30;
-        var timerInterval = setInterval(function () {
-            if (secondsLeft === 0) {
-                clearInterval(timerInterval);
-                sendMessage();
-            } else {
-                timeEL.textContent = '00:' + secondsLeft;
-            }
-            secondsLeft--;
-        }, 1000);
-    }
-
     function hideIntro() {
         introEL.classList.add("hide")
     }
@@ -90,9 +89,9 @@ function runCode() {
     // }
 
 
-    hideScores();
+    // hideScores();
     hideIntro();
-    startTimer();
+    
 
 
     function displayQuestion() {
@@ -137,6 +136,8 @@ function runCode() {
     displayQuestion();
     checkAnswer();
 };
+
+
 
 function gameOver() {
     if (secondsLeft === 0) {
