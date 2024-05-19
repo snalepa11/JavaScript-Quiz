@@ -9,6 +9,8 @@ var displayQuestionEl = document.getElementById("display-question")
 
 var displayChoicesEl = document.getElementById("display-choices")
 
+var topScoresEl = document.getElementById("scores-section")
+
 function sendMessage() {
     timeEL.textContent = ('Times up!');
 }
@@ -28,8 +30,14 @@ function startTimer() {
 
 function hideIntro() {
     introEL.classList.add("hide")
+
+function hideScores()
+{
+    introEL.classList.add("hide")
+}
 }
 
+hideScores();
 hideIntro();
 startTimer();
 
@@ -132,21 +140,31 @@ function displayChoices (){
     displayChoicesEl.append(choicebbutton)
     displayChoicesEl.append(choicecbutton)
     displayChoicesEl.append(choicedbutton)
+};
+
+function checkAnswer(answer){
+var answer = function answer(){
+    onclick()
 }
-
-displayChoices();
-
-var choicebtn = 
-
-displayQuestion();
+if(){
+ choiceabutton | choiceabutton | choicecbutton | choicedbutton === correctAnswer
 }
+then
 
-function checkAnswer(answer)
+
+};
 
 function gameOver()
 
 function storeHighScores(event)
 
 function showHighScores() 
+
+displayChoices();
+displayQuestion();
+checkAnswer();
+}
+
+
 
 document.getElementById('startBtn').addEventListener("click" , runCode);
