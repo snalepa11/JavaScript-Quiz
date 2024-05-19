@@ -1,7 +1,7 @@
 function startTimer() {
     var timeEL = document.getElementById("timer")
 
-    var secondsLeft = 5;
+    var secondsLeft = 30;
     var timerInterval = setInterval(updateTimer, 1000);
 
     function updateTimer() {
@@ -15,126 +15,125 @@ function startTimer() {
     }
 }
 
-
-function runCode() {
-    startTimer();
-
-    var introEL = document.getElementById("quiz-intro")
-
+function askQuestions(currentScore) {
     var displayQuestionEl = document.getElementById("display-question")
-
     var displayChoicesEl = document.getElementById("display-choices")
-
-    var topScoresEl = document.getElementById("scores-section")
-
+    
     var myQuestions = [
         {
             question: "What kinds of data types are the following: numbers, strings, booleans, and symbols?",
             answers: {
-                a: 'primary',
-                b: 'primitive',
-                c: 'singular',
-                d: 'major'
+                A: 'A: primary',
+                B: 'B: primitive',
+                C: 'C: singular',
+                D: 'D: major'
             },
-            correctAnswer: 'b'
+            correctAnswer: 'B'
         },
         {
             question: "What are undeclared variables?",
             answers: {
-                a: 'variables that do not exist in a program and are not declared',
-                b: 'variables that are written in the wrong syntax',
-                c: 'variables that return as false',
-                d: 'variables that are too complex'
+                A: 'A: variables that do not exist in a program and are not declared',
+                B: 'B: variables that are written in the wrong syntax',
+                C: 'C: variables that return as false',
+                D: 'D: variables that are too complex'
             },
-            correctAnswer: 'a'
+            correctAnswer: 'A'
         },
         {
             question: "What are undefined variables?",
             answers: {
-                a: 'variables that return as false',
-                b: 'varaibles that are written in wrong syntax',
-                c: 'variables that have been declared but have not been given any value',
-                d: 'variables that do not exist in a program and are not declared'
+                A: 'A: variables that return as false',
+                B: 'B: varaibles that are written in wrong syntax',
+                C: 'C: variables that have been declared but have not been given any value',
+                D: 'D: variables that do not exist in a program and are not declared'
             },
-            correctAnswer: 'c'
+            correctAnswer: 'C'
         },
         {
             question: "What 'this' keyword in javascript?",
             answers: {
-                a: ' this, refers to the variable it is next to',
-                b: ' this, refers to a string saying this',
-                c: ' this, refers to an array',
-                d: ' this, refers to the object from where it was called'
+                A: 'A: this, refers to the variable it is next to',
+                B: 'B: this, refers to a string saying this',
+                C: 'C: this, refers to an array',
+                D: 'D: this, refers to the object from where it was called'
             },
-            correctAnswer: 'd'
+            correctAnswer: 'D'
         },
         {
             question: "Which symbol is used for single line comments in javascript?",
             answers: {
-                a: '//',
-                b: '/*',
-                c: '*',
-                d: '()'
+                A: 'A: //',
+                B: 'B: /*',
+                C: 'C: *',
+                D: 'D: ()'
             },
-            correctAnswer: 'a'
+            correctAnswer: 'A'
         }
-    ]
+    ];
+
+    var questionOn = 0;
+    var score = 0;
+
+    function checkAnswer(element){
+        valueSelected = element.target.innerText;
+
+        if (myQuestions[questionOn].correctAnswer === valueSelected[0]) {
+            score++;  
+        } 
+
+        questionOn++;   
+
+        if (questionOn < 5) {
+            displayQuestion();
+            displayChoices();
+        }
+    }
+
+    function displayQuestion() {
+        displayQuestionEl.textContent = myQuestions[questionOn].question
+    }
+
+    function displayChoices() {
+        var letterChoices = ["A", "B", "C", "D"];
+
+        for (let letterChoiceOn = 0; letterChoiceOn < letterChoices.length; letterChoiceOn++) {
+            
+            var elementId = "choice"+ letterChoices[letterChoiceOn]
+            if(document.getElementById(elementId)) {
+                var choiceElement = document.getElementById(elementId);
+                choiceElement.remove();
+            }
+
+            var choiceButton = document.createElement("button")
+            choiceButton.setAttribute('id', elementId)
+            choiceButton.textContent = myQuestions[questionOn].answers[letterChoices[letterChoiceOn]]
+            choiceButton.onclick = checkAnswer;
+
+            displayChoicesEl.append(choiceButton)
+        }
+    };
+
+    displayQuestion();
+    displayChoices();
+}
+
+function runCode() {
+    startTimer();
+    askQuestions();
+
+    var introEL = document.getElementById("quiz-intro")
+    var topScoresEl = document.getElementById("scores-section")
 
     function hideIntro() {
         introEL.classList.add("hide")
     }
+    hideIntro();
 
     // function hideScores() {
     //     topScoresEL.classList.add("hide")
     // }
-
-
     // hideScores();
-    hideIntro();
-    
-
-
-    function displayQuestion() {
-        let question = myQuestions[0].question
-        displayQuestionEl.textContent = question
-    }
-
-    function displayChoices() {
-        let choicea = myQuestions[0].answers.a
-        let choiceb = myQuestions[0].answers.b
-        let choicec = myQuestions[0].answers.c
-        let choiced = myQuestions[0].answers.d
-
-        let choiceabutton = document.createElement("button")
-        choiceabutton.textContent = choicea
-
-        let choicebbutton = document.createElement("button")
-        choicebbutton.textContent = choiceb
-
-        let choicecbutton = document.createElement("button")
-        choicebbutton.textContent = choicec
-
-        let choicedbutton = document.createElement("button")
-        choicebbutton.textContent = choiced
-
-        displayChoicesEl.append(choiceabutton)
-        displayChoicesEl.append(choicebbutton)
-        displayChoicesEl.append(choicecbutton)
-        displayChoicesEl.append(choicedbutton)
-    };
-
-    // function checkAnswer(answer){
-    // var answer = function answer(){
-    //     onclick()
-    // }
-    // if(){
-    //  choiceabutton | choiceabutton | choicecbutton | choicedbutton === correctAnswer
-    // }
-    // then
-
-    displayChoices();
-    displayQuestion();
-    checkAnswer();
 };
 
 
