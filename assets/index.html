@@ -7,27 +7,41 @@
     <link rel="stylesheet" type="text/css" href="./style.css"/>
 </head>
 <body>
-    <header>
-            <p class="view-highscores">View Highscores</p>
-            <p id="timer">Time: 0</p>
+    <header id="header-section">
+        <a id="high-scores-link">View Highscores</a>
+        <p id="timer">Time: 0</p>
     </header>
 
-    <section id="quiz-intro">
+    <section id="intro-section">
       <h1>Coding Quiz Challenge</h1>
       <p>Try out this Javascript Quiz and see how much you know!</p>
-      <button id="startBtn">Start</button>
+      <button id="start-quiz-btn">Start</button>
     </section>
 
-    <section>
+    <section id="question-section">
       <h3 id="display-question"></h3>
-      <section id="display-choices">
-        
-      </section>
+      <div id="display-choices"></div>
     </section>
 
-    <section id = "scores-section">
-      <h1 id = "your-score"> Your Score: </h1>
-      <section id="display-scores"></section>
+    <section id="submit-initials-section">
+        <div>
+            <h1>All done!</h1>
+            <p id="your-score">Your final score is</p>
+            <div id="initials-section">
+                <p>Enter initials:</p>
+                <input id="users-initials-input" type="text" minlength="2" maxlength="3">
+                <button id="submit-users-initials">Submit</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="high-scores-section">
+        <h1>Highscores</h1>
+        <section id="display-high-scores"></section>
+        <div>
+            <button id="go-back-btn">Go Back</button>
+            <button id="clear-highscores-btn">Clear Highscores</button>
+        </div>
     </section>
     
     <script src="./script.js"></script>

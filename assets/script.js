@@ -1,155 +1,226 @@
-function startTimer() {
-    var timeEL = document.getElementById("timer")
+let currentScore = 0;
+let questionOn = 0;
+let quizTimer = 0;
 
-    var secondsLeft = 30;
+let highScoresArr = [];
+
+const javascriptQuestions = [
+    {
+        question: "What kinds of data types are the following: numbers, strings, booleans, and symbols?",
+        answers: {
+            A: 'A: primary',
+            B: 'B: primitive',
+            C: 'C: singular',
+            D: 'D: major'
+        },
+        correctAnswer: 'B'
+    },
+    {
+        question: "What are undeclared variables?",
+        answers: {
+            A: 'A: variables that do not exist in a program and are not declared',
+            B: 'B: variables that are written in the wrong syntax',
+            C: 'C: variables that return as false',
+            D: 'D: variables that are too complex'
+        },
+        correctAnswer: 'A'
+    },
+    {
+        question: "What are undefined variables?",
+        answers: {
+            A: 'A: variables that return as false',
+            B: 'B: varaibles that are written in wrong syntax',
+            C: 'C: variables that have been declared but have not been given any value',
+            D: 'D: variables that do not exist in a program and are not declared'
+        },
+        correctAnswer: 'C'
+    },
+    {
+        question: "What 'this' keyword in javascript?",
+        answers: {
+            A: 'A: this, refers to the variable it is next to',
+            B: 'B: this, refers to a string saying this',
+            C: 'C: this, refers to an array',
+            D: 'D: this, refers to the object from where it was called'
+        },
+        correctAnswer: 'D'
+    },
+    {
+        question: "Which symbol is used for single line comments in javascript?",
+        answers: {
+            A: 'A: //',
+            B: 'B: /*',
+            C: 'C: *',
+            D: 'D: ()'
+        },
+        correctAnswer: 'A'
+    }
+];
+
+// Generic Functions
+function updateTimerText(timerText) {
+    var timeEL = document.getElementById("timer")
+    timeEL.textContent = timerText
+}
+
+function removeClass(sectionId) {
+    document.getElementById(sectionId).removeAttribute("class");
+}
+
+function addHideClass(sectionId) {
+    document.getElementById(sectionId).setAttribute("class", "hide");
+}
+
+// Header Section
+// ------------------------------------------------------------------
+function viewHighScores() {
+    addHideClass("header-section");
+    addHideClass("intro-section");
+    addHideClass("question-section")
+    addHideClass("submit-initials-section")
+    removeClass("high-scores-section");
+}
+document.getElementById('high-scores-link').addEventListener("click", viewHighScores)
+
+// Quiz Intro Section
+// ------------------------------------------------------------------
+function viewScoresSection()  {
+    addHideClass("header-section")
+    addHideClass("intro-section")
+    addHideClass("question-section")
+    removeClass("submit-initials-section")
+    addHideClass("high-scores-section")
+
+    const yourScoreElement = document.getElementById("your-score");
+    yourScoreElement.innerText = "Your final score is " + currentScore + "."
+}
+function startTimer() {
     var timerInterval = setInterval(updateTimer, 1000);
 
     function updateTimer() {
-        if (secondsLeft === 0) {
+        if (quizTimer === 0) {
+            updateTimerText('Times up!')
+            viewScoresSection();
+
             clearInterval(timerInterval);
-            timeEL.textContent = 'Times up!';
         } else {
-            timeEL.textContent = "Time: " + secondsLeft;
-            secondsLeft--;
+            updateTimerText("Time: " + quizTimer)
+            quizTimer--;
         }
     }
 }
+function validateQuestionAnswer(element) {
+    if (javascriptQuestions[questionOn].correctAnswer === element.target.innerText[0]) {
+        currentScore++;
+    }
 
-function askQuestions(currentScore) {
+    questionOn++;
+    if (questionOn === 5) {
+        viewScoresSection();
+    } else {
+        displayQuestion();
+    }
+}
+function displayQuestion() {
     var displayQuestionEl = document.getElementById("display-question")
     var displayChoicesEl = document.getElementById("display-choices")
-    
-    var myQuestions = [
-        {
-            question: "What kinds of data types are the following: numbers, strings, booleans, and symbols?",
-            answers: {
-                A: 'A: primary',
-                B: 'B: primitive',
-                C: 'C: singular',
-                D: 'D: major'
-            },
-            correctAnswer: 'B'
-        },
-        {
-            question: "What are undeclared variables?",
-            answers: {
-                A: 'A: variables that do not exist in a program and are not declared',
-                B: 'B: variables that are written in the wrong syntax',
-                C: 'C: variables that return as false',
-                D: 'D: variables that are too complex'
-            },
-            correctAnswer: 'A'
-        },
-        {
-            question: "What are undefined variables?",
-            answers: {
-                A: 'A: variables that return as false',
-                B: 'B: varaibles that are written in wrong syntax',
-                C: 'C: variables that have been declared but have not been given any value',
-                D: 'D: variables that do not exist in a program and are not declared'
-            },
-            correctAnswer: 'C'
-        },
-        {
-            question: "What 'this' keyword in javascript?",
-            answers: {
-                A: 'A: this, refers to the variable it is next to',
-                B: 'B: this, refers to a string saying this',
-                C: 'C: this, refers to an array',
-                D: 'D: this, refers to the object from where it was called'
-            },
-            correctAnswer: 'D'
-        },
-        {
-            question: "Which symbol is used for single line comments in javascript?",
-            answers: {
-                A: 'A: //',
-                B: 'B: /*',
-                C: 'C: *',
-                D: 'D: ()'
-            },
-            correctAnswer: 'A'
+
+    // Show Question
+    displayQuestionEl.textContent = javascriptQuestions[questionOn].question
+
+    // Show Choices
+    let letterChoices = ["A", "B", "C", "D"];
+    for (let letterChoiceOn = 0; letterChoiceOn < letterChoices.length; letterChoiceOn++) {
+        let elementId = "choice"+ letterChoices[letterChoiceOn]
+        if (document.getElementById(elementId)) {
+            document.getElementById(elementId).remove();
         }
-    ];
 
-    var questionOn = 0;
-    var score = 0;
+        let choiceButton = document.createElement("button")
+        choiceButton.setAttribute('id', elementId)
+        choiceButton.style.marginBottom = "10px"
+        choiceButton.style.textAlign = "left"
+        choiceButton.textContent = javascriptQuestions[questionOn].answers[letterChoices[letterChoiceOn]]
+        choiceButton.onclick = validateQuestionAnswer;
 
-    function checkAnswer(element){
-        valueSelected = element.target.innerText;
-
-        if (myQuestions[questionOn].correctAnswer === valueSelected[0]) {
-            score++;  
-        } 
-
-        questionOn++;   
-
-        if (questionOn < 5) {
-            displayQuestion();
-            displayChoices();
-        }
+        displayChoicesEl.append(choiceButton)
     }
-
-    function displayQuestion() {
-        displayQuestionEl.textContent = myQuestions[questionOn].question
-    }
-
-    function displayChoices() {
-        var letterChoices = ["A", "B", "C", "D"];
-
-        for (let letterChoiceOn = 0; letterChoiceOn < letterChoices.length; letterChoiceOn++) {
-            
-            var elementId = "choice"+ letterChoices[letterChoiceOn]
-            if(document.getElementById(elementId)) {
-                var choiceElement = document.getElementById(elementId);
-                choiceElement.remove();
-            }
-
-            var choiceButton = document.createElement("button")
-            choiceButton.setAttribute('id', elementId)
-            choiceButton.textContent = myQuestions[questionOn].answers[letterChoices[letterChoiceOn]]
-            choiceButton.onclick = checkAnswer;
-
-            displayChoicesEl.append(choiceButton)
-        }
-    };
-
-    displayQuestion();
-    displayChoices();
 }
+function startQuiz() {
+    // Always rest variables for new quiz
+    currentScore = 0;
+    questionOn = 0;
+    quizTimer = 5;
 
-function runCode() {
+    viewQuizQuestionSection();
     startTimer();
-    askQuestions();
+    displayQuestion();
+}
+document.getElementById('start-quiz-btn').addEventListener("click", startQuiz);
 
-    var introEL = document.getElementById("quiz-intro")
-    var topScoresEl = document.getElementById("scores-section")
+// Question Section
+// ------------------------------------------------------------------
+function viewQuizQuestionSection() {
+    removeClass("header-section")
+    addHideClass("intro-section")
+    removeClass("question-section")
+    addHideClass("submit-initials-section")
+    addHideClass("high-scores-section")
+}
 
-    function hideIntro() {
-        introEL.classList.add("hide")
+// Submit Initials Section
+// ------------------------------------------------------------------
+function submitInitialsToHighScores () {
+    let usersInitials = document.getElementById('users-initials-input').value
+
+    highScoresArr.push(
+        {
+            initials : usersInitials,
+            score: currentScore
+        }
+    );
+
+    let highScoresArrayDisplaySection = document.getElementById("display-high-scores")
+    while(highScoresArrayDisplaySection.firstChild) {
+        highScoresArrayDisplaySection.removeChild(highScoresArrayDisplaySection.firstChild)
     }
-    hideIntro();
 
-    // function hideScores() {
-    //     topScoresEL.classList.add("hide")
-    // }
-    // hideScores();
-};
+    // We need to add <p> with the objects.
+    highScoresArr.map((highScore, index) => {
+        const para = document.createElement("p");
+        const node = document.createTextNode(`${index}. ${highScore.initials} - ${highScore.score}`);
+        para.appendChild(node);
 
+        const element = document.getElementById("display-high-scores");
+        element.appendChild(para);
+    })
 
+    viewHighScores();
+}
+document.getElementById('submit-users-initials').addEventListener("click", submitInitialsToHighScores)
 
-function gameOver() {
-    if (secondsLeft === 0) {
-        // TODO
+// High Scores Section
+function viewQuizIntroSection() {
+    removeClass("header-section");
+    removeClass("intro-section");
+    addHideClass("question-section");
+    addHideClass("submit-initials-section");
+    addHideClass("high-scores-section");
+
+    updateTimerText("Time: " + quizTimer)
+}
+function clearHighScores() {
+    highScoresArr = []
+    let highScoresArrayDisplaySection = document.getElementById("display-high-scores")
+    while(highScoresArrayDisplaySection.firstChild) {
+        highScoresArrayDisplaySection.removeChild(highScoresArrayDisplaySection.firstChild)
     }
 }
+document.getElementById('go-back-btn').addEventListener("click", viewQuizIntroSection)
+document.getElementById('clear-highscores-btn').addEventListener("click", clearHighScores)
 
-function storeHighScores(event) {
-    // TODO
-}
-
-function showHighScores() {
-    // TODO
-}
-
-document.getElementById('startBtn').addEventListener("click", runCode);
+// ------------------------------------------------------------------
+// Hide sections not needed as soon as page is loaded.
+addHideClass("question-section");
+addHideClass("submit-initials-section");
+addHideClass("high-scores-section");
