@@ -84,7 +84,7 @@ document.getElementById('high-scores-link').addEventListener("click", viewHighSc
 
 // Quiz Intro Section
 // ------------------------------------------------------------------
-function viewScoresSection()  {
+function viewScores()  {
     addHideClass("header-section")
     addHideClass("intro-section")
     addHideClass("question-section")
@@ -100,7 +100,7 @@ function startTimer() {
     function updateTimer() {
         if (quizTimer === 0) {
             updateTimerText('Times up!')
-            viewScoresSection();
+            viewScores();
 
             clearInterval(timerInterval);
         } else {
@@ -116,7 +116,7 @@ function validateQuestionAnswer(element) {
 
     questionOn++;
     if (questionOn === 5) {
-        viewScoresSection();
+        viewScores();
     } else {
         displayQuestion();
     }
